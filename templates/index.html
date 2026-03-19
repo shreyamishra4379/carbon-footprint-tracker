@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EcoPulse Pro</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="bg-light">
+<!-- ================= HERO SECTION ================= -->
+<div class="hero-wrapper">
+
+    <!-- Top Bar -->
+<div class="hero-top">
+<div class="hero-left">
+        <div class="logo-icon">🌿</div>
+        <span class="logo-text">EcoPulse Pro</span>
+    </div>
+
+    <div class="hero-right d-flex align-items-center gap-4">
+
+    <!-- dashboard -->
+    <a href="/" class="nav-link d-flex align-items-center gap-2">
+        <i class="bi bi-house"></i>
+        <span>dashboard</span>
+    </a>
+
+    
+    <!-- Dark Mode -->
+    <button onclick="toggleDarkMode()" class="icon-btn">
+        <i class="bi bi-moon"></i>
+    </button>
+
+    <!-- Profile Dropdown -->
+    <div class="dropdown">
+        <a href="#" 
+           class="d-flex align-items-center gap-2 profile-link"
+           data-bs-toggle="dropdown">
+
+            <img src="https://i.pravatar.cc/40"
+                 class="rounded-circle"
+                 width="38"
+                 height="38">
+
+            <i class="bi bi-caret-down-fill small"></i>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-warning" href="/logout">Logout</a></li>
+        </ul>
+    </div>
+
+</div>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+                <li>
+                    <button class="dropdown-item text-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#resetModal">
+                        Reset Data
+                    </button>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-warning" href="/logout">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</div>
+ <!-- Main Title -->
+    <div class="hero-content">
+        <h1>
+            Carbon Footprint
+            <span class="highlight">Dashboard</span>
+        </h1>
+
+        <p>
+            Track, analyze, and reduce your daily carbon emissions
+        </p>
+    </div>
+
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container-fluid mt-4">
+    <div class="row">
+
+        <!-- LEFT SIDE : DAILY ENTRY -->
+        <div class="col-lg-3 col-md-4">
+
+            <div class="daily-entry-card p-4">
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="entry-icon">
+                        <i class="bi bi-calculator"></i>
+                    </div>
+                    <h4 class="ms-3 mb-0">Daily Entry</h4>
+                </div>
+
+                <!-- Transport -->
+                <label class="form-label">🚗 Transport</label>
+                <select id="transport" class="form-select custom-input mb-3">
+                    <option value="">Select transport</option>
+                    <option value="car">Car</option>
+                    <option value="bus">Bus</option>
+                    <option value="bike">Bike</option>
+                    <option value="train">Train</option>
+                </select>
+
+                <!-- Distance -->
+                <label class="form-label">📍 Distance (km)</label>
+                <input type="number" id="distance"
+                       class="form-control custom-input mb-3"
+                       placeholder="Enter distance">
+
+                <!-- Diet -->
+                <label class="form-label">🍴 Diet</label>
+                <select id="meal" class="form-select custom-input mb-3">
+                    <option value="">Select diet type</option>
+                    <option value="veg">Vegetarian</option>
+                    <option value="nonveg">Non-Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                </select>
+
+                <!-- Meals Count -->
+                <label class="form-label">🍽 Number of Meals</label>
+                <input type="number"
+                       class="form-control custom-input mb-3"
+                       placeholder="Enter number of meals">
+
+                <!-- Electricity -->
+                <label class="form-label">⚡ Electricity Usage (kWh)</label>
+                <input type="number"
+                       id="electricity"
+                       class="form-control custom-input mb-3"
+                       placeholder="Enter kWh">
+
+                <!-- Water Usage -->
+                <label class="form-label">💧 Water Usage (Litres)</label>
+                <input type="number"
+                       class="form-control custom-input mb-3"
+                       placeholder="Enter litres">
+
+                <!-- Waste -->
+                <label class="form-label">🗑 Waste Generated (kg)</label>
+                <input type="number"
+                       class="form-control custom-input mb-4"
+                       placeholder="Enter waste amount">
+
+                <button onclick="addEntry()"
+                        class="btn btn-success w-100 btn-modern">
+                    Calculate & Save Entry
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE : DASHBOARD -->
+        <div class="col-lg-9 col-md-8 p-4">
+            <!-- KPI CARDS -->
+            <div class="row g-4 mb-5 text-center">
+
+                <div class="col-lg-2 col-md-4">
+                    <div class="card kpi-card">
+                        <small>Total CO₂</small>
+                        <h3 id="totalCarbon">0 kg</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4">
+                    <div class="card kpi-card">
+                        <small>Eco Score</small>
+                        <div class="eco-chart-wrapper">
+                            <canvas id="ecoScoreChart"></canvas>
+                            <div class="eco-score-text" id="ecoScoreText">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4">
+                    <div class="card kpi-card">
+                        <small>Status</small>
+                        <div id="impactStatus"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4">
+                    <div class="card kpi-card">
+                        <small>Savings</small>
+                        <h6 id="dailySavings">0 kg</h6>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4">
+                    <div class="card kpi-card">
+                        <small>Entries</small>
+                        <h6 id="entryCount">0</h6>
+                    </div>
+                </div>
+
+            </div>
+<!-- STATUS + ECO TIPS SIDE BY SIDE -->
+<div class="row mb-4">
+
+    <!-- LEFT SIDE (Status + Progress Combined Card) -->
+    <div class="col-lg-7">
+
+        <div class="card p-4 h-100">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Today's Status</h5>
+                <select id="statusFilter" class="form-select w-auto">
+                    <option value="daily">Daily</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+
+            <!-- Content -->
+            <div class="row align-items-center mb-4">
+
+                <div class="col-md-4">
+                    <h1 id="statusBigNumber" style="font-size:55px;">
+                        14.70
+                    </h1>
+                    <div id="statusLabel" class="text-muted">
+                        kg CO₂ this month
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <div style="height:240px;">
+                        <canvas id="breakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <ul class="list-unstyled">
+                        <li><span style="color:#2e8b57;">●</span> Transport</li>
+                        <li><span style="color:#f4a300;">●</span> Diet</li>
+                        <li><span style="color:#2aa1d3;">●</span> Energy</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Divider -->
+            <hr>
+
+            <!-- Daily Progress -->
+            <div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="fw-semibold">Daily CO₂ Progress</span>
+                    <span class="text-muted">Goal: 8 kg per day</span>
+                </div>
+
+                <div class="progress" style="height:18px; border-radius:50px;">
+                    <div id="goalBar"
+                         class="progress-bar bg-success"
+                         style="width:80%;">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE (Eco Tips) -->
+    <div class="col-lg-5">
+
+        <div class="card p-4 h-100">
+
+            <h4 class="mb-4">🌿 Eco Tips</h4>
+
+            <div class="mb-4">
+                <h6>🚗 Transport Tips</h6>
+                <ul class="text-muted">
+                    <li>Walk or cycle for short distances</li>
+                    <li>Use public transport when possible</li>
+                    <li>Carpool to reduce emissions</li>
+                </ul>
+            </div>
+
+            <div class="mb-4">
+                <h6>🍽 Diet Tips</h6>
+                <ul class="text-muted">
+                    <li>Include more plant-based meals</li>
+                    <li>Reduce red meat consumption</li>
+                    <li>Choose local seasonal food</li>
+                </ul>
+            </div>
+
+            <div>
+                <h6>⚡ Energy Tips</h6>
+                <ul class="text-muted">
+                    <li>Switch to LED lighting</li>
+                    <li>Turn off unused appliances</li>
+                    <li>Reduce AC usage by 1–2°C</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+           
+        <!-- SMART INSIGHTS SECTION -->
+<div class="row mb-4">
+
+    <!-- Carbon Reduction Score -->
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card p-4 text-center">
+            <h6>🌱 Carbon Reduction Score</h6>
+            <h2 id="reductionScore" class="text-success">0%</h2>
+            <small class="text-muted">Compared to last week</small>
+        </div>
+    </div>
+
+    <!-- Trees Saved -->
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card p-4 text-center">
+            <h6>🌳 Trees Saved</h6>
+            <h2 id="treesSaved">0</h2>
+            <small class="text-muted">This week</small>
+        </div>
+    </div>
+
+    <!-- Emission Change -->
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card p-4 text-center">
+            <h6>📉 Emission Change</h6>
+            <h2 id="emissionChange" class="text-danger">0%</h2>
+            <small class="text-muted">vs last week</small>
+        </div>
+    </div>
+
+    <!-- Goal Streak -->
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card p-4 text-center">
+            <h6>📊 Goal Streak</h6>
+            <h2 id="goalStreak">0 days</h2>
+            <small class="text-muted">Below 8kg/day</small>
+        </div>
+    </div>
+
+</div>
+
+          
+
+
+
+                      
+
+<!-- RESET MODAL -->
+<div class="modal fade" id="resetModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Confirm Reset</h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                This will permanently delete all entries.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger"
+                        onclick="confirmReset()">Yes, Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

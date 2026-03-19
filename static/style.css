@@ -1,0 +1,844 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+
+body {
+    background: #f4f8f6;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #1f3f2f;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+.container {
+    padding: 30px;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    background: #ffffff;
+    min-height: 100vh;
+    border-right: 1px solid #e6efe9;
+    padding: 20px;
+}
+
+.sidebar h5 {
+    color: #2e8b57;
+    font-weight: 700;
+}
+
+.sidebar label {
+    font-size: 14px;
+    color: #5f7f6f;
+}
+
+.sidebar input,
+.sidebar select {
+    background: #f4f8f6;
+    border: 1px solid #d7e6dc;
+    border-radius: 12px;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.sidebar button {
+    background: #2e8b57;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.sidebar button:hover {
+    background: #256d46;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    border: 1px solid #e6efe9;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+
+/* =========================
+   KPI CARDS (TOP)
+========================= */
+
+.kpi-card {
+    background: #e9f5ef;
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid #cde5d8;
+}
+
+.kpi-danger {
+    background: #fdecec;
+    border: 1px solid #f5c2c2;
+}
+
+.kpi-success {
+    background: #e8f7ec;
+    border: 1px solid #cdebd5;
+}
+
+.kpi-title {
+    font-size: 14px;
+    color: #5f7f6f;
+    margin-bottom: 5px;
+}
+
+.kpi-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f3f2f;
+}
+
+.kpi-sub {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* =========================
+   STATUS BADGES
+========================= */
+
+.badge-success {
+    background: #1f9d55;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+}
+
+.badge-warning {
+    background: #f4a300;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+}
+
+.badge-danger {
+    background: #dc2626;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+}
+
+
+/* =========================
+   SPECIAL STATUS SECTION
+========================= */
+
+.status-card {
+    background: #fff5f5;
+    border: 2px solid #f3c5c5;
+    border-radius: 25px;
+}
+
+
+/* =========================
+   MONTHLY SUMMARY CARDS
+========================= */
+
+.summary-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid #e6efe9;
+}
+
+.summary-title {
+    font-size: 14px;
+    color: #5f7f6f;
+}
+
+.summary-value {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+
+/* =========================
+   SMART TIP
+========================= */
+
+.tip-card {
+    background: #f0faf5;
+    border-radius: 18px;
+    border: 1px solid #d9f0e2;
+}
+
+
+/* =========================
+   CHART CONTAINER
+========================= */
+
+.chart-container {
+    height: 300px;
+    position: relative;
+}
+
+
+/* =========================
+   ICON CIRCLE STYLE
+========================= */
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    background: rgba(46, 139, 87, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+.text-success {
+    color: #1f9d55 !important;
+}
+
+.text-danger {
+    color: #dc2626 !important;
+}
+
+.text-muted {
+    color: #7c9c8b !important;
+}
+
+.rounded-xl {
+    border-radius: 20px;
+}
+
+.shadow-soft {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .kpi-value {
+        font-size: 24px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+}
+
+
+
+
+.progress {
+    background: #e6efe9;
+    border-radius: 50px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #2e8b57, #1f9d55);
+    border-radius: 50px;
+    transition: width 0.6s ease;
+}
+
+/* Main Eco Tip Card */
+.eco-tip-card {
+    background: #f5faf7;
+    border-radius: 20px;
+    border: 1px solid #dceee3;
+}
+
+/* Individual Tip Box */
+.tip-box {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #e4efe9;
+}
+
+/* Icon Circle */
+.tip-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+/* Category Colors */
+.transport-icon {
+    background: #e7f5ec;
+    color: #2e8b57;
+}
+
+.diet-icon {
+    background: #fff2e0;
+    color: #f4a300;
+}
+
+.energy-icon {
+    background: #e7f1fb;
+    color: #2aa1d3;
+}
+
+/* Bullet List */
+.eco-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.eco-list li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 18px;
+    color: #456a5a;
+}
+
+.eco-list li::before {
+    content: "●";
+    position: absolute;
+    left: 0;
+    color: #2e8b57;
+    font-size: 12px;
+}
+
+/* View Link */
+.view-link {
+    color: #2e8b57;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.view-link:hover {
+    text-decoration: underline;
+}
+
+.status-tips-row {
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+/* LEFT COLUMN */
+.left-column {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* RIGHT COLUMN */
+.eco-tips-card {
+    flex: 1;
+    background: #e8f3ec;
+    padding: 20px;
+    border-radius: 18px;
+    border: 2px solid #cde5d6;
+}
+
+/* STATUS CARD */
+.status-card {
+    background: #f9eaea;
+    padding: 25px;
+    border-radius: 18px;
+    border: 2px solid #f3b3b3;
+}
+
+/* STATUS CONTENT */
+.status-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* CHART SIZE */
+.status-chart {
+    width: 200px;
+    height: 200px;
+}
+
+/* PROGRESS CARD */
+.progress-card {
+    background: #f3f4f6;
+    padding: 20px;
+    border-radius: 16px;
+}
+
+/* PROGRESS BAR */
+.progress {
+    height: 16px;
+    background: #d1d5db;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    transition: width 0.5s ease;
+}
+
+.kpi-card {
+    padding: 20px;
+    border-radius: 15px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.kpi-card small {
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.kpi-card h3 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.eco-chart-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto;
+}
+
+.eco-chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.eco-score-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 18px;
+}
+/* MODERN HEADER */
+.modern-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: #f4f7f6;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* LEFT SIDE */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-box {
+    background: #1f9d72;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f9d72;
+}
+
+/* RIGHT SIDE */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* NAV LINKS */
+.nav-link-custom {
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link-custom:hover {
+    color: #1f9d72;
+}
+
+/* DASHBOARD BUTTON */
+.dashboard-btn {
+    background: #1f9d72;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+}
+
+.dashboard-btn:hover {
+    background: #188a63;
+    color: white;
+}
+
+/* ICON BUTTON */
+.icon-btn {
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #6b7280;
+}
+
+.icon-btn:hover {
+    color: #1f9d72;
+}
+
+/* PROFILE */
+.profile-link {
+    display: flex;
+    align-items: center;
+}
+
+/* HERO WRAPPER */
+.hero-wrapper {
+    background: #eef3f1;
+    padding: 5px 3px 5px 4px;
+    border-bottom: 1px solid #d1d5db;
+}
+
+/* TOP BAR */
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO */
+.hero-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    background: #1f9d72;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1f9d72;
+}
+
+/* ACTIONS */
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.home-link {
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.home-link:hover {
+    color: #1f9d72;
+}
+
+.icon-btn {
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #6b7280;
+}
+
+/* MAIN TITLE */
+.hero-content {
+    margin-top: 20px;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: #1f2937;
+}
+
+.highlight {
+    color: #1f9d72;
+}
+
+.hero-content p {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #6b7280;
+}
+
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 65px;
+    height: 55px;
+    background: #1f9d72;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+}
+
+.logo-text {
+    font-weight: 600;
+    font-size: 28px;
+    color: #1f9d72;
+}
+
+.hero-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.home-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.home-link:hover {
+    color: #1f9d72;
+}
+
+.icon-btn {
+    border: none;
+    background: none;
+    font-size: 18px;
+    color: #6b7280;
+}
+
+.profile-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.status-card,
+.eco-tip-card {
+    margin-top: 0 !important;
+}
+.kpi-row {
+    margin-bottom: 10px !important;
+}
+
+.daily-entry-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.entry-icon {
+    width: 45px;
+    height: 45px;
+    background: #1f9d72;
+    color: white;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.custom-input {
+    border-radius: 14px !important;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.custom-input:focus {
+    border-color: #1f9d72;
+    box-shadow: 0 0 0 0.15rem rgba(31,157,114,0.15);
+}
+
+.btn-modern {
+    border-radius: 14px;
+    padding: 12px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1f9d72, #27ae60);
+    border: none;
+}
+
+.btn-modern:hover {
+    background: linear-gradient(135deg, #198754, #1f9d72);
+}
+
+.daily-entry-card {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 100px;
+}
+.hero-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.hero-right .nav-link {
+    color: #34495e;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.hero-right .nav-link:hover {
+    color: #1f9d72;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #34495e;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.icon-btn:hover {
+    color: #1f9d72;
+}
+
+.profile-link img {
+    border: 2px solid #1f9d72;
+}
+
+.hero-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.hero-right .nav-link {
+    color: #34495e;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.hero-right .nav-link:hover {
+    color: #1f9d72;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: #34495e;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.icon-btn:hover {
+    color: #1f9d72;
+}
+
+.profile-link img {
+    border: 2px solid #1f9d72;
+}
+.card {
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+h2 {
+    font-weight: 700;
+}
+.dropdown-menu {
+    z-index: 2000;
+}

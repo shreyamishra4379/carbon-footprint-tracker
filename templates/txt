@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EcoPulse Pro</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body class="bg-light">
+
+<!-- ================= FIXED NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top px-4">
+
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold" href="#">
+        🌿 EcoPulse Pro
+    </a>
+
+    <!-- Right Section -->
+    <div class="ms-auto d-flex align-items-center gap-3">
+
+        <!-- Sidebar Toggle -->
+        <button onclick="toggleSidebar()" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Home -->
+        <a href="/" class="nav-link text-white">
+            <i class="bi bi-house"></i>
+        </a>
+
+        <!-- Dashboard -->
+        <a href="/dashboard" class="nav-link text-white">
+            <i class="bi bi-grid"></i>
+        </a>
+
+        <!-- Dark Mode -->
+        <button onclick="toggleDarkMode()" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-moon"></i>
+        </button>
+
+        <!-- Profile Dropdown -->
+        <div class="dropdown">
+            <a class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+               href="#"
+               data-bs-toggle="dropdown">
+
+                <img src="https://i.pravatar.cc/40"
+                     class="rounded-circle me-2"
+                     width="35">
+
+                <strong>{{ current_user.username }}</strong>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                    <button class="dropdown-item text-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#resetModal">
+                        Reset Data
+                    </button>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item text-warning" href="/logout">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
+<div class="container-fluid" style="margin-top:80px;">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+       <!-- SIDEBAR -->
+<div class="col-md-3 sidebar p-4">
+
+    <h6 class="section-title">🗓 Daily Entry</h6>
+
+    <label class="form-label">🚗 Transport</label>
+    <select id="transport" class="form-select custom-input mb-3">
+        <option value="car">Car</option>
+        <option value="bus">Bus</option>
+        <option value="bike">Bike</option>
+    </select>
+
+    <label class="form-label">Distance (km)</label>
+    <input type="number" id="distance" class="form-control custom-input mb-3">
+
+    <label class="form-label">🍴 Meal Type</label>
+    <select id="meal" class="form-select custom-input mb-3">
+        <option value="veg">Vegetarian</option>
+        <option value="nonveg">Non-Vegetarian</option>
+    </select>
+
+    <label class="form-label">⚡ Electricity Usage</label>
+    <input type="number" id="electricity" class="form-control custom-input mb-4">
+
+    <button onclick="addEntry()" class="btn btn-success w-100 btn-gradient">
+        Calculate & Save
+    </button>
+
+</div>
+
+        <!-- DASHBOARD AREA -->
+        <div class="col-md-9 p-5">
+
+            <h2 class="mb-4">Carbon Footprint Dashboard</h2>
+
+            <!-- KPI CARDS -->
+         <div class="row g-4 mb-4">
+
+    <div class="col-lg-2 col-md-4">
+        <div class="card p-3 text-center h-100">
+            <small>Total CO₂</small>
+            <h2 id="totalCarbon" class="highlight-number">0</h2>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4">
+        <div class="card p-3 text-center h-100">
+            <small>Eco Score</small>
+            <div style="height:120px;">
+                <canvas id="ecoScoreChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4">
+        <div class="card p-3 text-center h-100">
+            <small>Status</small>
+            <h6 id="impactStatus"></h6>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4">
+        <div class="card p-3 text-center h-100">
+            <small>Savings</small>
+            <h6 id="dailySavings">0 kg</h6>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-4">
+        <div class="card p-3 text-center h-100">
+            <small>Entries</small>
+            <h6 id="entryCount">0</h6>
+        </div>
+    </div>
+
+</div>
+<!-- TOTAL CO2 PROGRESS BAR -->
+
+<!-- CARBON BREAKDOWN BELOW KPI -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card status-card p-4">
+
+            <!-- Header Row -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5>Today's Status</h5>
+
+                <!-- Dropdown -->
+                <select id="statusFilter" class="form-select w-auto">
+                    <option value="daily">Daily</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                </select>
+            </div>
+
+            <div class="row align-items-center">
+
+                <!-- Big Number -->
+                <div class="col-md-4">
+                    <h1 id="statusBigNumber"
+                        style="font-size:60px; font-weight:700;">
+                        0.00
+                    </h1>
+                    <div class="text-muted" id="statusLabel">
+                        kg CO₂ today
+                    </div>
+                </div>
+
+                <!-- Donut Chart -->
+                <div class="col-md-4 text-center">
+                    <div style="height:260px; position:relative;">
+                        <canvas id="breakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Legend -->
+                <div class="col-md-4">
+                    <ul class="list-unstyled">
+                        <li><span style="color:#2e8b57;">●</span> Transport</li>
+                        <li><span style="color:#f4a300;">●</span> Diet</li>
+                        <li><span style="color:#2aa1d3;">●</span> Energy</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+    <!-- RIGHT: Dynamic Eco Tip -->
+    <div class="col-lg-6">
+    <div class="card eco-tip-card p-4">
+
+        <h4 class="mb-4">🌿 Eco Tips</h4>
+
+        <!-- Transport Tips -->
+        <div class="tip-box mb-4">
+            <div class="d-flex align-items-center mb-3">
+                <div class="tip-icon transport-icon">🚗</div>
+                <h5 class="ms-3 mb-0">Transport Tips</h5>
+            </div>
+
+            <ul class="eco-list">
+                <li>Try cycling or walking for short distances under 3km</li>
+                <li>Use public transport to reduce your carbon footprint</li>
+                <li>Carpool with colleagues to cut emissions in half</li>
+            </ul>
+
+            <a href="#" class="view-link">View all tips →</a>
+        </div>
+
+        <!-- Diet Tips -->
+        <div class="tip-box mb-4">
+            <div class="d-flex align-items-center mb-3">
+                <div class="tip-icon diet-icon">🍽</div>
+                <h5 class="ms-3 mb-0">Diet Tips</h5>
+            </div>
+
+            <ul class="eco-list">
+                <li>Include more plant-based meals</li>
+                <li>Reduce red meat consumption</li>
+                <li>Choose local seasonal food</li>
+            </ul>
+        </div>
+
+        <!-- Energy Tips -->
+        <div class="tip-box">
+            <div class="d-flex align-items-center mb-3">
+                <div class="tip-icon energy-icon">⚡</div>
+                <h5 class="ms-3 mb-0">Energy Tips</h5>
+            </div>
+
+            <ul class="eco-list">
+                <li>Turn off unused appliances</li>
+                <li>Use LED lighting</li>
+                <li>Reduce AC usage by 1–2 degrees</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+    <!--Trees Needed555r5-->
+    <div class="col">
+    <div class="card p-3 text-center mb-4">
+    <small>Trees Needed 🌳</small>
+    <h5 id="treesNeeded">0</h5>
+</div>
+</div>
+<div class="card p-3 mb-4">
+    <h6>Smart Eco Tip 🌿</h6>
+    <p id="smartTip" class="mb-0">
+        Your personalized tip will appear here.
+    </p>
+</div>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card p-3">
+            <small>This Month Total</small>
+            <h5 id="monthTotal">0 kg</h5>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3">
+            <small>Average / Day</small>
+            <h5 id="monthAvg">0 kg</h5>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3">
+            <small>Best Day</small>
+            <h5 id="monthBest">0 kg</h5>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+            <!-- CHARTS -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-3">
+                        <h6>Weekly Trend</h6>
+                        <div style="height:300px;">
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- RESET MODAL -->
+<div class="modal fade" id="resetModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Reset</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        This will permanently delete all your entries.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" onclick="confirmReset()">Yes, Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function animateCounter(id, endValue, duration = 1500) {
+    let start = 0;
+    let increment = endValue / (duration / 16);
+    let counter = document.getElementById(id);
+
+    function update() {
+        start += increment;
+        if (start < endValue) {
+            counter.innerText = start.toFixed(2);
+            requestAnimationFrame(update);
+        } else {
+            counter.innerText = endValue;
+        }
+    }
+    update();
+}
+
+animateCounter("totalCarbon", 13.8);
+</script>
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
